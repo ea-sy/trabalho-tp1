@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "placaVideo": "da",
+        "ram": "a",
+        "processador": "a",
+        "placaMae": "a",
+        "armazenamento": "a"
+    },
+    {
+        "id": 2,
+        "placaVideo": "",
+        "ram": "",
+        "processador": "",
+        "placaMae": "",
+        "armazenamento": ""
+    },
+    {
+        "id": 3,
+        "placaVideo": "",
+        "ram": "",
+        "processador": "",
+        "placaMae": "",
+        "armazenamento": ""
+    },
+    {
+        "id": 4,
+        "placaVideo": "a",
+        "ram": "a",
+        "processador": "a",
+        "placaMae": "a",
+        "armazenamento": "A"
+    }
+]
