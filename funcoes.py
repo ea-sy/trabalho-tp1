@@ -1,82 +1,73 @@
+from json import lerArquivo, salvarArquivo
 import os
-import json
+from auxilio import gerarID, listaVazia
 
 nome_arquivo = "computador.json"
+lista = None
 
-def lerArquivo() -> list:
-    arq = open(nome_arquivo, 'r', encoding='utf-8')
-    data = arq.read()
-                # read = retorna str
-                # load = carregar
-                # load(S) = str
-    return json.loads(data)
+class Computador:
+    __id : str
+    __placaVideo : str
+    __ram : str
+    __processador : str
+    __placaMae : str
+    __armazenamento : str
+    
+    def getID(self):
+        return self.__id
+    
+    def setID(self, id):
+        self.__id = id
+    
+    def getplacaVideo(self):
+        return self.__placaVideo
+    
+    def setplacaVideo(self, placaVideo):
+        self.__placaVideo = placaVideo
 
-def salvarArquivo(computador: list) -> list:
-    arq = open(nome_arquivo, 'w+', encoding='utf-8')
-        # open = abre e printa o conteudo
-    data = json.dumps(computador, indent=4)
-    arq.write(data)
-        # write = substitui conteudo exitente no arquivo
-    arq.close()
+    def getRam(self):
+        return self.__ram
+    
+    def setRam(self, ram):
+        self.__ram = ram
 
-def cadastrarComputador() -> dict:
-    pc = {} # dic vazio
-    #chaves 
-    pc['id'] = geradorID()
-    pc['placaVideo'] = str(input('Deseja Qual a Placa de Vídeo? '))
-    pc['ram'] = str(input('Quantidade de Memoria RAM? '))
-    pc['processador'] = str(input('Deseja Qual processador? '))
-    pc['placaMae'] = str(input('Deseja qual Placa Mãe? '))
-    pc['armazenamento'] = str(input('Quantidade de Armazenamento? '))
+    def getProcessador(self):
+        return self.__processador
+    
+    def setProcessador(self, processador):
+        self.__processador = processador
 
-    computador = lerArquivo()
-    computador.append(pc)
-              #append = add isso em pc
-    salvarArquivo(computador)
+    def getPlacamae(self):
+        return self.__placaMae
+    
+    def setPlacamae(self, placaMae):
+        self.__placaMae = placaMae
+    
+    def getArmazenamento(self):
+        return self.__armazenamento
 
-def menu():
-    os.system('cls')
-    print(10 * '-=-')
-    print('1 - Cadastrar Computador')
-    print('2 - Mostrar todos os Computadores')
-    print('3 - Deletar Computador')
-    print('4 - Selecionar Computador por ID')
-    print('5 - Alterar o Computador')
-    print('6 - Sair')
-    print(10 * '-=-')
-    return int(input('Escolha uma opção: '))
+    def setArmazenamento(self, armazenamento):
+        self.__armazenamento = armazenamento
+        
 
-def mostrarComputadores():
-    os.system('cls')
-    print(10 * '-=-')
-    computador = lerArquivo()
-    for pc in computador:
-        print(f'ID: {pc["id"]}')
-        print(f'Placa de video: {pc["placaVideo"]}')
-        print(f'RAM: {pc["ram"]}')
-        print(f'Processador: {pc["processador"]}')
-        print(f'Placa mãe: {pc["placaMae"]}')
-        print(f'Armazenamento: {pc["armazenamento"]}')
-        print(10 * '-=-')
-    continuar()
+    def cadastrarComputador(self) -> dict:
+        print("----- CADASTRO DO COMPUTADOR -----") 
+        self.setID(gerarID())
+        self.setplacaVideo(input('Deseja Qual a Placa de Vídeo? '))
+        self.setRam(input('Quantidade de Memoria RAM? '))
+        self.setProcessador(input('Deseja Qual processador? '))
+        self.setPlacamae(input('Deseja qual Placa Mãe? '))
+        self.setArmazenamento(input('Quantidade de Armazenamento? '))
+        print('----------------------------------')
+        return
 
-def continuar():
-    input('Pressione ENTER para continuar...')
+    Computador = lerArquivo()
+    Computador.append(self.__dict__)
+    salvarArquivo(Computador)
 
-def deletarComp():
-    call = lerArquivo()
-    pos = str(input("Insira o ID do computador que deseja exluir: "))
-    for i in call:
-        if i['id'] == pos:
-            local = call.index(i)
-                        # index = retorna a posição na primeira ocorrencia do valor, no caso o ID.
-            call.pop(local)
-            # pop = remove o elemento da posição especificada
-    salvarArquivo(call)
-    continuar()
-
-def alterarComputador():
-    lista = lerArquivo()
+    def alterarComputador(self):
+        os.system('cls')
+        print("----- EDIÇÂO DO COMPUTADOR -----")
     escolha = int(input("Qual deseja alterar? "))
     for p in lista:
         if p['id'] == escolha:
@@ -84,33 +75,48 @@ def alterarComputador():
             p['ram'] = str(input('Quantidade de Memoria RAM: '))
             p['processador'] = str(input('Deseja Qual processador: '))
             p['placaMae'] = str(input('Deseja qual Placa Mãe: '))
-            p['armazenamento'] = str(input('Quantidade de Armazenamento: ')) 
-    salvarArquivo(lista)
-    continuar()
+            p['armazenamento'] = str(input('Quantidade de Armazenamento: '))
     
-    
+    def mostrarComputadores(self):
+        Computador = lerArquivo()
+        if listaVazia(Computador) != 1:
+            for pc in Computador:
+                print('----- COMPUTADOR -----')
+                print(f'ID: {pc["__id"]}')
+                print(f'Placa de video: {pc["__placaVideo"]}')
+                print(f'RAM: {pc["__ram"]}')
+                print(f'Processador: {pc["__processador"]}')
+                print(f'Placa mãe: {pc["__placaMae"]}')
+                print(f'Armazenamento: {pc["__armazenamento"]}')
+                print("----------------")
+        print("Pressione enter para Continuar...")
 
-def selecionarComp():
-    lista = lerArquivo()
-    componente = int(input("Informe o ID do Computador: "))
-    for i in lista:
-        if i["id"] == componente:
-            print(f'Computador selecionado: {i}')
-    continuar()
+    def deletarComp(self):
+        print("----- EXCLUSÃO DE COMPUTADOR -----")
+        call = lerArquivo()
+        pos = str(input("Insira o ID do computador que deseja exluir: "))
+        for i in call:
+            if i['id'] == pos:
+                local = call.index(i)
+                call.pop(local)
+        salvarArquivo(call)
+        print("Pressione enter para Continuar...")
 
-def geradorID():
-    data = lerArquivo()
-    listId = []
-    if len(data) == 0:
-        return 1
-    else:
-        for i in range(len(data)):
-            listId.append(data[i]['id'])
-        return max(listId)+1
+    def geradorID():
+        data = lerArquivo()
+        listId = []
+        if len(data) == 0:
+            return 1
+        else:
+            for i in range(len(data)):
+                listId.append(data[i]['id'])
+            return max(listId)+1
 
-    
-            
-            
+pc = Computador()
+
+        
+                
+                
 
 
-    
+        
